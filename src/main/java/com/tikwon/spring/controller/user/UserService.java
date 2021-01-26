@@ -1,6 +1,6 @@
-package com.tikwon.spring.service;
+package com.tikwon.spring.controller.user;
 
-import com.tikwon.spring.entity.User;
+import com.tikwon.spring.controller.user.User;
 
 import reactor.core.publisher.Mono;
 
