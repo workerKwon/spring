@@ -1,6 +1,6 @@
 package com.tikwon.spring.controller;
 
-import com.tikwon.spring.model.User;
+import com.tikwon.spring.entity.User;
 import com.tikwon.spring.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

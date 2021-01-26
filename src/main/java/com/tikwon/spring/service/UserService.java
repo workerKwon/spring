@@ -1,6 +1,6 @@
 package com.tikwon.spring.service;
 
-import com.tikwon.spring.model.User;
+import com.tikwon.spring.entity.User;
 
 import reactor.core.publisher.Mono;
 

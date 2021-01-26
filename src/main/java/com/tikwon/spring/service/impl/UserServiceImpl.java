@@ -1,7 +1,7 @@
 package com.tikwon.spring.service.impl;
 
-import com.tikwon.spring.model.User;
-import com.tikwon.spring.repo.UserRepository;
+import com.tikwon.spring.entity.User;
+import com.tikwon.spring.repository.UserRepository;
 import com.tikwon.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

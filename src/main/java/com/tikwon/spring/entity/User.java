@@ -1,4 +1,4 @@
-package com.tikwon.spring.model;
+package com.tikwon.spring.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

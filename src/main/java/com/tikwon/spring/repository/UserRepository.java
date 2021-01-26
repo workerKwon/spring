@@ -1,6 +1,6 @@
-package com.tikwon.spring.repo;
+package com.tikwon.spring.repository;
 
-import com.tikwon.spring.model.User;
+import com.tikwon.spring.entity.User;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 
 public interface UserRepository extends ReactiveCrudRepository<User, Integer> {

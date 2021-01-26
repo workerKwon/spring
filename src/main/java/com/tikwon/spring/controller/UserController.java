@@ -1,6 +1,6 @@
 package com.tikwon.spring.controller;
 
-import com.tikwon.spring.model.User;
+import com.tikwon.spring.entity.User;
 import com.tikwon.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 
 @Controller
 @RequestMapping("/_api")
-public class RestController{
+public class UserController {
 
     @Autowired
     private UserService userService;
