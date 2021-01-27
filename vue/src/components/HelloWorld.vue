@@ -1,15 +1,37 @@
 <template lang="pug">
 #hello
-  div
+  .input-box
+    p name
+    input(type="text" v-model="user.name")
+  .input-box
+    p age
+    input(type="text" v-model="user.age")
+  .input-box
+    button(@click="saveUser(user)") save
 
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String,
   },
+  data() {
+    return {
+      user:{
+        name: '',
+        age: '',
+      },
+    }
+  },
+  methods: {
+    ...mapActions([
+      'saveUser'
+    ])
+  }
 };
 </script>
 
