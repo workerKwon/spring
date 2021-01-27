@@ -1,17 +1,17 @@
-package com.tikwon.spring.config;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.config.CorsRegistry;
-import org.springframework.web.reactive.config.EnableWebFlux;
-import org.springframework.web.reactive.config.WebFluxConfigurer;
-
-@Configuration
-@EnableWebFlux
-public class WebConfig implements WebFluxConfigurer {
-    @Override
-    public void addCorsMappings(CorsRegistry corsRegistry) {
-        corsRegistry.addMapping("/**")
-                .allowedOrigins("http://localhost:8081")
-                .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH").allowedHeaders("Authorization");
-    }
-}
+//package com.tikwon.spring.config;
+//
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.web.reactive.config.CorsRegistry;
+//import org.springframework.web.reactive.config.EnableWebFlux;
+//import org.springframework.web.reactive.config.WebFluxConfigurer;
+//
+//@Configuration
+//@EnableWebFlux
+//public class WebConfig implements WebFluxConfigurer {
+//    @Override
+//    public void addCorsMappings(CorsRegistry corsRegistry) {
+//        corsRegistry.addMapping("/**")
+//                .allowedOrigins("http://localhost:8081")
+//                .allowedMethods("*").allowedHeaders("Authorization");
+//    }
+//}

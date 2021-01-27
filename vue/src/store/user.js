@@ -11,7 +11,7 @@ export default {
   },
   actions: {
     saveUser(store, user) {
-      request.post('/create', user)
+      request.post('/createUser', user)
         .then(res => {
           store.commit('setUser', res.data)
         })
@@ -23,6 +23,15 @@ export default {
       request.get('/getList')
         .then(res => {
           store.commit('setUserList', res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    deleteAll(store) {
+      request.delete('/deleteAll')
+        .then(res => {
+          store.dispatch('getUserList')
         })
         .catch(err => {
           console.log(err)

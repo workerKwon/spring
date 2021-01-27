@@ -8,7 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("user")
 public class User {
     @Id
-    private Long id;
+    private int id;
 
     private String name;
 

@@ -20,4 +20,9 @@ public class UserServiceImpl implements UserService {
     public Flux<User> getUserList() {
         return userRepository.findAll();
     }
+
+    @Override
+    public Mono deleteAll() {
+        return userRepository.deleteAll();
+    }
 }
