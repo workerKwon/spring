@@ -36,6 +36,15 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    deleteId(store, id) {
+      request.delete(`${id}`)
+        .then(() => {
+          store.dispatch('getUserList')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   mutations: {

@@ -28,4 +28,9 @@ public class UserController {
     public Mono deleteAll() {
         return userService.deleteAll();
     }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
+    public Mono deleteId(@PathVariable int id) {
+        return userService.deleteId(id);
+    }
 }

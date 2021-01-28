@@ -25,4 +25,9 @@ public class UserServiceImpl implements UserService {
     public Mono deleteAll() {
         return userRepository.deleteAll();
     }
+
+    @Override
+    public Mono deleteId(int id) {
+        return userRepository.deleteById(id);
+    }
 }

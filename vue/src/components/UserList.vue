@@ -9,6 +9,8 @@
       tr(v-for="user in userList")
         td {{user.name}}
         td {{user.age}}
+        td
+          button(@click="deleteId(user.id)") delete
   button(@click="deleteAll") deleteAll
 </template>
 
@@ -24,7 +26,8 @@ export default {
   methods: {
     ...mapActions([
       'getUserList',
-      'deleteAll'
+      'deleteAll',
+      'deleteId'
     ])
   },
   mounted() {

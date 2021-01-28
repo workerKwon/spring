@@ -10,4 +10,6 @@ public interface UserService {
     Flux<User> getUserList();
 
     Mono deleteAll();
+
+    Mono deleteId(int id);
 }
