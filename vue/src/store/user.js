@@ -1,58 +1,58 @@
-import request from "@/utils/request";
+import request from '@/utils/request';
 
 export default {
   state: {
     user: {},
-    userList: []
+    userList: [],
   },
   getters: {
-    user: state => state.user,
-    userList: state => state.userList,
+    user: (state) => state.user,
+    userList: (state) => state.userList,
   },
   actions: {
     saveUser(store, user) {
       request.post('/createUser', user)
-        .then(res => {
-          store.commit('setUser', res.data)
+        .then((res) => {
+          store.commit('setUser', res.data);
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     getUserList(store) {
       request.get('/getList')
-        .then(res => {
-          store.commit('setUserList', res.data)
+        .then((res) => {
+          store.commit('setUserList', res.data);
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     deleteAll(store) {
       request.delete('/deleteAll')
-        .then(res => {
-          store.dispatch('getUserList')
+        .then(() => {
+          store.dispatch('getUserList');
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     deleteId(store, id) {
       request.delete(`${id}`)
         .then(() => {
-          store.dispatch('getUserList')
+          store.dispatch('getUserList');
         })
-        .catch(err => {
-          console.log(err)
-        })
-    }
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   mutations: {
     setUser(state, user) {
-      state.user = user
+      state.user = user;
     },
     setUserList(state, userList) {
-      state.userList = userList
-    }
+      state.userList = userList;
+    },
   },
-}
+};

@@ -15,25 +15,26 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
-  name: "UserList",
+  name: 'UserList',
   computed: {
     ...mapGetters([
       'userList',
-    ])
+    ]),
   },
   methods: {
     ...mapActions([
       'getUserList',
       'deleteAll',
-      'deleteId'
-    ])
+      'deleteId',
+    ]),
   },
   mounted() {
     this.getUserList();
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

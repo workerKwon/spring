@@ -10,8 +10,8 @@ const routes = [
   {
     path: '/userList',
     name: 'UserList',
-    component: () => import('../components/UserList.vue')
-  }
+    component: () => import('../components/UserList.vue'),
+  },
 ];
 
 const router = createRouter({

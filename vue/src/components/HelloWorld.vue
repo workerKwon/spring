@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex';
 
 export default {
   name: 'HelloWorld',
@@ -21,17 +21,17 @@ export default {
   },
   data() {
     return {
-      user:{
+      user: {
         name: '',
         age: '',
       },
-    }
+    };
   },
   methods: {
     ...mapActions([
-      'saveUser'
-    ])
-  }
+      'saveUser',
+    ]),
+  },
 };
 </script>
 
