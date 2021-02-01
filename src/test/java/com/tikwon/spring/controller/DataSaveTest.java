@@ -1,7 +1,9 @@
 package com.tikwon.spring.controller;
 
 import com.tikwon.spring.controller.user.User;
+import com.tikwon.spring.controller.user.UserDTO;
 import com.tikwon.spring.controller.user.UserService;
+import com.tikwon.spring.controller.user.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -17,12 +19,18 @@ import reactor.core.publisher.Mono;
 public class DataSaveTest {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Test
     void put() {
 
-        Mono<User> user = userService.createUser(new User("1234", "1234"));
+        UserDTO userDTO = new UserDTO();
+        userDTO.setName("kti");
+        userDTO.setEmail("test@test.com");
+        userDTO.setPassword("1234");
+        userDTO.setAuth("ADMIN");
+
+        Mono<User> user = userService.save(userDTO);
 
     }
 }

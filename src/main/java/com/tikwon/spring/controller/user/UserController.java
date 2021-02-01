@@ -12,25 +12,25 @@ import reactor.core.publisher.Mono;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/createUser")
-    public Mono<User> createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public Mono<User> createUser(@RequestBody UserDTO userDTO) {
+        return userService.save(userDTO);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getList")
-    public Flux<User> getUserList() {
-        return userService.getUserList();
-    }
+//    @RequestMapping(method = RequestMethod.GET, value = "/getList")
+//    public Flux<User> getUserList() {
+//        return userService();
+//    }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteAll")
-    public Mono deleteAll() {
-        return userService.deleteAll();
-    }
+//    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteAll")
+//    public Mono deleteAll() {
+//        return userService.deleteAll();
+//    }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-    public Mono deleteId(@PathVariable int id) {
-        return userService.deleteId(id);
-    }
+//    @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
+//    public Mono deleteId(@PathVariable int id) {
+//        return userService.deleteId(id);
+//    }
 }
