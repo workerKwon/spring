@@ -4,10 +4,18 @@
     p name
     input(type="text" v-model="user.name")
   .input-box
-    p age
-    input(type="text" v-model="user.age")
+    p email
+    input(type="text" v-model="user.email")
   .input-box
-    button(@click="saveUser(user)") save
+    p password
+    input(type="password" v-model="user.password")
+  .input-box
+    span admin
+    input(type="radio" name="auth" value="ROLE_ADMIN, ROLE_USER" v-model="user.auth")
+    span user
+    input(type="radio" name="auth" value="ROLE_USER" v-model="user.auth")
+  .input-box
+    button(@click="signUp(user)") save
 
 </template>
 
@@ -23,13 +31,15 @@ export default {
     return {
       user: {
         name: '',
-        age: '',
+        email: '',
+        password: '',
+        auth: '',
       },
     };
   },
   methods: {
     ...mapActions([
-      'saveUser',
+      'signUp',
     ]),
   },
 };

@@ -1,16 +1,20 @@
 package com.tikwon.spring.controller.user;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+@NoArgsConstructor
 @Data
 @Table("user")
 public class User implements UserDetails {
@@ -37,8 +41,9 @@ public class User implements UserDetails {
         this.auth = userDTO.getAuth();
     }
 
-    public User() {
-
+    public User changeEncodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+        return this;
     }
 
     @Override
@@ -72,6 +77,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

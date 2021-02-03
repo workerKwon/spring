@@ -8,10 +8,12 @@
     tbody
       tr(v-for="user in userList")
         td {{user.name}}
-        td {{user.age}}
+        td {{user.email}}
+        td {{user.auth}}
         td
           button(@click="deleteId(user.id)") delete
   button(@click="deleteAll") deleteAll
+  button(@click="onClickSignOut") sign out
 </template>
 
 <script>
@@ -29,7 +31,11 @@ export default {
       'getUserList',
       'deleteAll',
       'deleteId',
+      'signOut'
     ]),
+    onClickSignOut() {
+      this.signOut();
+    }
   },
   mounted() {
     this.getUserList();

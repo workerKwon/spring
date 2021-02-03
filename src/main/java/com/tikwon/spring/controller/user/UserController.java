@@ -8,29 +8,29 @@ import reactor.core.publisher.Mono;
 
 @CrossOrigin
 @RestController
-@RequestMapping("_api")
+@RequestMapping("/_api")
 public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/createUser")
+    @RequestMapping(method = RequestMethod.POST, value = "/signUp")
     public Mono<User> createUser(@RequestBody UserDTO userDTO) {
         return userService.save(userDTO);
     }
 
-//    @RequestMapping(method = RequestMethod.GET, value = "/getList")
-//    public Flux<User> getUserList() {
-//        return userService();
-//    }
+    @RequestMapping(method = RequestMethod.GET, value = "/getList")
+    public Flux<User> getUserList() {
+        return userService.getAll();
+    }
 
-//    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteAll")
-//    public Mono deleteAll() {
-//        return userService.deleteAll();
-//    }
+    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteAll")
+    public Mono<Void> deleteAll() {
+        return userService.deleteAll();
+    }
 
-//    @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-//    public Mono deleteId(@PathVariable int id) {
-//        return userService.deleteId(id);
-//    }
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public Mono deleteId(@PathVariable int id) {
+        return userService.deleteId(id);
+    }
 }

@@ -1,4 +1,5 @@
 import request from '@/utils/request';
+import router from "@/router";
 
 export default {
   state: {
@@ -10,14 +11,32 @@ export default {
     userList: (state) => state.userList,
   },
   actions: {
-    saveUser(store, user) {
-      request.post('/createUser', user)
+    signUp(store, user) {
+      request.post('/signUp', user)
         .then((res) => {
           store.commit('setUser', res.data);
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+    signIn(store, form) {
+      request.post('/signIn', form)
+        .then((res) => {
+          console.log(res.data)
+          router.push('/userList')
+        })
+        .catch((err) => {
+          console.log(err)
+          router.push('/')
+        })
+    },
+    signOut(store) {
+      request.post('/signOut')
+        .then(response => {
+        window.localStorage.clear();
+        router.push('/')
+      })
     },
     getUserList(store) {
       request.get('/getList')

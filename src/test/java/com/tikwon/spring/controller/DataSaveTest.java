@@ -2,7 +2,7 @@ package com.tikwon.spring.controller;
 
 import com.tikwon.spring.controller.user.User;
 import com.tikwon.spring.controller.user.UserDTO;
-import com.tikwon.spring.controller.user.UserService;
+import com.tikwon.spring.controller.user.UserDetailServiceImpl;
 import com.tikwon.spring.controller.user.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
