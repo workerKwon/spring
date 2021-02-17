@@ -15,6 +15,7 @@ export default {
       request.post('/signUp', user)
         .then((res) => {
           store.commit('setUser', res.data);
+          router.push('/')
         })
         .catch((err) => {
           console.log(err);
