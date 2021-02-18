@@ -1,70 +1,59 @@
 package com.tikwon.spring.config;
 
-import com.tikwon.spring.controller.user.UserDetailServiceImpl;
+import com.tikwon.spring.controller.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailServiceImpl userDetailService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    @Autowired
-    private AccessHandler accessHandler;
-
+    // 암호화에 필요한 PasswordEncoder 를 Bean 등록합니다.
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    // authenticationManager를 Bean 등록합니다.
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
-    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
-    }
-
-    @Override
-    public void configure(WebSecurity webSecurity){
-        webSecurity.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
-    }
-
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .authorizeRequests()
-                .antMatchers("/_api/signUp").permitAll()
-                .antMatchers("/_api/getList").hasAuthority("ROLE_USER")
-                .anyRequest().authenticated()
-                .and().formLogin().loginProcessingUrl("/_api/signIn").usernameParameter("email").passwordParameter("password")
-                .successHandler(accessHandler.successHandler()).failureHandler(accessHandler.failureHandler())
-                .and().cors()
-                .and().csrf().disable();
-    }
-
-    @Bean // TODO: Must study this config. First, this config must be used with httpSecurity cors config.
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-//        configuration.setAllowCredentials(true); // If this config exists, can not use * in addAllowedOrigin.
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .httpBasic().disable() // rest api 만을 고려하여 기본 설정은 해제하겠습니다.
+                .csrf().disable() // csrf 보안 토큰 disable처리.
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 역시 사용하지 않습니다.
+                .and()
+                .authorizeRequests() // 요청에 대한 사용권한 체크
+                .antMatchers("/_api/admin").hasRole("ADMIN")
+                .antMatchers("/_api/getList").hasRole("USER")
+                .anyRequest().permitAll() // 그외 나머지 요청은 누구나 접근 가능
+                .and()
+                .formLogin().loginProcessingUrl("/_api/signIn").usernameParameter("email").passwordParameter("password")
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class);
+        // JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 전에 넣는다
     }
 }

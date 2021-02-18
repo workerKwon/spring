@@ -24,6 +24,9 @@ public class UserController {
         return userService.getAll();
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/admin")
+    public Flux<User> getAdmin() {return userService.getAll();}
+
     @RequestMapping(method = RequestMethod.DELETE, value = "/deleteAll")
     public Mono<Void> deleteAll() {
         return userService.deleteAll();

@@ -7,12 +7,9 @@ import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Data
@@ -28,7 +25,7 @@ public class User implements UserDetails {
 
     private String password;
 
-    private String auth;
+    private List<String> auth;
 
     public User(UserDTO userDTO) {
         update(userDTO);
@@ -41,18 +38,11 @@ public class User implements UserDetails {
         this.auth = userDTO.getAuth();
     }
 
-    public User changeEncodePassword(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(this.password);
-        return this;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> roles = new HashSet<>();
-        for (String role : auth.split(",")) {
-            roles.add(new SimpleGrantedAuthority(role));
-        }
-        return roles;
+        return this.auth.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
